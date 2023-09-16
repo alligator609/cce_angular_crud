@@ -7,7 +7,11 @@
   <input type="email" [(ngModel)]="user.email">
   <label>Phone:</label>
   <input type="number" [(ngModel)]="user.phone">
+<<<<<<< HEAD
   <button (click)="addUser()"> {{user.id ? 'Update' : 'Ádd' }} User</button>
+=======
+  <button (click)="addUser()">Add User</button>
+>>>>>>> 1d289c00738737d4dce1aa02c68a5b14726e9fab
 
   <p style="color: red;">{{error}}</p>
 </div>
@@ -17,16 +21,22 @@
     <th>Name</th>
     <th>Email</th>
     <th>Phone</th>
+<<<<<<< HEAD
     <th>Action</th>
+=======
+>>>>>>> 1d289c00738737d4dce1aa02c68a5b14726e9fab
   </tr>
   <tr *ngFor="let user of users">
     <td>{{user.id}}</td>
     <td>{{user.name}}</td>
     <td>{{user.email}}</td>
     <td>{{user.phone}}</td>
+<<<<<<< HEAD
     <td><button (click)="edit(user)">Edit</button>
       <button (click)="delete(user)">Delete</button>
     </td>
+=======
+>>>>>>> 1d289c00738737d4dce1aa02c68a5b14726e9fab
   </tr>
   <tr>
     <td colspan="4">Total Users: {{users.length}}</td>
