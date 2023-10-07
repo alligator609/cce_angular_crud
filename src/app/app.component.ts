@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements  OnInit {
   title = 'angular-crud';
   error = '';
   user : User = {
@@ -15,12 +17,26 @@ export class AppComponent {
   };
 
   users: User[] = [
-    { id: 1, name: 'Leanne Graham', email: 'lear@gmail.com', phone: 177073680315644 },
-    { id: 2, name: 'Md Hasan', email: 'hasan@gmail.com', phone: 177073},
-    { id: 3, name: 'Md Iqbal', email: 'iqbal@gmail.com', phone: 680315644 },
-    { id: 4, name: 'Md Raju', email: 'raju@gmail.com', phone: 17768031 }
+    // { id: 1, name: 'Leanne Graham', email: 'lear@gmail.com', phone: 177073680315644 },
+    // { id: 2, name: 'Md Hasan', email: 'hasan@gmail.com', phone: 177073},
+    // { id: 3, name: 'Md Iqbal', email: 'iqbal@gmail.com', phone: 680315644 },
+    // { id: 4, name: 'Md Raju', email: 'raju@gmail.com', phone: 17768031 }
   ];
+  constructor(private http: HttpClient) { } 
+  ngOnInit(): void {
+    // get all students \
+    this.fetchData();
+  }
 
+  fetchData(){
+    this.http.get(environment.api+'/students').subscribe((res:any)=>{
+      console.log(res);
+      this.users = res.data;
+    });
+  }
+
+
+  
   addUser() {
     console.log(this.user);
     if(this.user.name == ''){
@@ -49,12 +65,23 @@ export class AppComponent {
 
 
     if(this.user.id == null) {
-      this.user.id = this.users.length + 1;
-      this.users.push(this.user);
+      //this.user.id = this.users.length + 1;
+      //this.users.push(this.user);
+      this.http.post(environment.api+'/students',this.user).subscribe((res:any)=>{
+        console.log(res);
+        if(res){
+          this.fetchData();
+        }
+      });
     }
     else{
       let editeduser = this.users.findIndex(x=>x.id==this.user.id);
-       this.users[editeduser] = this.user; 
+       this.http.put(environment.api+'/students/'+this.user.id,this.user).subscribe((res:any)=>{
+        console.log(res);
+        if(res){
+          this.users[editeduser] = res.data;
+        }
+      });
     }
     this.user = {
       name: '',
@@ -74,8 +101,13 @@ export class AppComponent {
   }
 delete(user:User){
   debugger
-  let editeduser = this.users.findIndex(x=>x.id==user.id);
-  this.users.splice(editeduser,1);
+  let editeduser = this.users.find(x=>x.id==user.id);
+  //this.users.splice(editeduser,1);
+  this.http.delete(environment.api+'/students/'+editeduser?.id).subscribe((res)=>{
+    if(res){
+      this.fetchData();
+    }
+  });
 }
 
 }
