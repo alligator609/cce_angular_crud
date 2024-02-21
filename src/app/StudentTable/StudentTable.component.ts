@@ -27,6 +27,7 @@ export class StudentTableComponent implements OnInit {
   ngOnInit(): void {
     // get all students \
     this.fetchData();
+    console.log('test');
   }
 
   fetchData(){

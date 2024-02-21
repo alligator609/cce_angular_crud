@@ -9,8 +9,8 @@ import { StudentTableComponent } from './StudentTable/StudentTable.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'Home', pathMatch: 'full'},
   { path: 'StudentTable', component: StudentTableComponent },
+  { path: '', redirectTo: 'StudentTable', pathMatch: 'full'},
 
 ];
 
